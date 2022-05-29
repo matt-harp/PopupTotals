@@ -10,7 +10,7 @@ A mod to show the total amount of an item in your inventory while collecting res
 
 
 ### Installation
-- Install [BepInEx for IL2CPP](https://builds.bepinex.dev/projects/bepinex_be) version >566, make sure to use _**BepInEx Unity IL2CPP for Windows x64 games**_
+- Install [BepInEx](https://v-rising.thunderstore.io/package/BepInEx/BepInExPack_V_Rising/)
 - Extract _PopupTotals.dll_ into _(VRising folder)/BepInEx/plugins_
 
 ### Known Issues
@@ -20,6 +20,8 @@ A mod to show the total amount of an item in your inventory while collecting res
 Join the [modding community](https://discord.gg/CWzkHvekg3) for support `@Night#3605`
 
 ### Changelog
+
+`1.0.2` Now dependant on BepInExPack
 
 `1.0.1` Example images changed
 
