@@ -19,7 +19,13 @@ A mod to show the total amount of an item in your inventory while collecting res
 ### Support
 Join the [modding community](https://discord.gg/CWzkHvekg3) for support `@Night#3605`
 
+Post an issue on the [github repo](https://github.com/matt-harp/PopupTotals) 
+
 ### Changelog
+
+`1.0.3` 
+* Switching languages no longer causes the mod to break
+* Fixed Cotton and Bone always displaying (0) instead of the real amount in your inventory
 
 `1.0.2` Now dependant on BepInExPack
 
