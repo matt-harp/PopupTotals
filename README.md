@@ -14,7 +14,7 @@ A mod to show the total amount of an item in your inventory while collecting res
 - Extract _PopupTotals.dll_ into _(VRising folder)/BepInEx/plugins_
 
 ### Known Issues
-- Changing language in-game causes the mod to break, a restart is needed to have the new language start working
+- None ([report one?](https://github.com/matt-harp/PopupTotals)) 
 
 ### Support
 Join the [modding community](https://discord.gg/CWzkHvekg3) for support `@Night#3605`
@@ -22,6 +22,8 @@ Join the [modding community](https://discord.gg/CWzkHvekg3) for support `@Night#
 Post an issue on the [github repo](https://github.com/matt-harp/PopupTotals) 
 
 ### Changelog
+
+`1.0.4` Forgot to update Known Issues
 
 `1.0.3` 
 * Switching languages no longer causes the mod to break
