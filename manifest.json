@@ -1,7 +1,7 @@
 {
   "name": "PopupTotals",
   "description": "Shows the total amount of an item in your inventory when collecting resources",
-  "version_number": "1.0.4",
+  "version_number": "1.0.5",
   "dependencies": [
     "BepInEx-BepInExPack_V_Rising-1.0.0"
   ],

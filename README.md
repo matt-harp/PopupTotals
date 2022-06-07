@@ -23,6 +23,8 @@ Post an issue on the [github repo](https://github.com/matt-harp/PopupTotals)
 
 ### Changelog
 
+`1.0.5` Fixes water filling related bugs
+
 `1.0.4` Forgot to update Known Issues
 
 `1.0.3` 
