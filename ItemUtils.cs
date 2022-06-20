@@ -37,7 +37,7 @@ namespace PopupTotals
                     var guid = kv.Key;
                     var managedData = managed.GetOrDefault<ManagedItemData>(guid);
                     if (managedData == null) continue;
-                    if (!managedData.PrefabName.Contains("_Ingredient_") && !managedData.PrefabName.Contains("Item_Consumable_Water")) continue;
+                    if (!managedData.PrefabName.Contains("_Ingredient_") && !managedData.PrefabName.Contains("Item_Consumable") && !managedData.PrefabName.Contains("Item_Building_Plants")) continue;
                     if (managedData.PrefabName is "Item_Ingredient_Kit_Base" or "Item_Ingredient_Gem_Base") continue;
                     var itemName = Localization.Get(managedData.Name, false);
                     Plugin.Logger.LogDebug(itemName);
