@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["master"]
+    
+jobs:
+  build:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Determine Version
+        run: |
+          VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" ./PopupTotals.csproj)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Build (Release)
+        run: dotnet build . --configuration Release -p:Version=${{ env.VERSION }}
+        
+      - name: GH Release
+        uses: softprops/action-gh-release@v1
+        if:  ${{ !env.ACT && github.event_name == 'push' }}
+        with:
+          body: Automatic pre-release of ${{ env.VERSION }} for ${{ env.GITHUB_SHA }}
+          name: v${{ env.VERSION }}
+          files: ./bin/Release/net6.0/PopupTotals.dll
+          fail_on_unmatched_files: true
+          prerelease: true
+          tag_name: v${{ env.VERSION }}
