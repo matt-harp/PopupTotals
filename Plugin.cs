@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using BepInEx;
-using BepInEx.IL2CPP;
 using BepInEx.Logging;
+using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 
 namespace PopupTotals
@@ -9,7 +9,7 @@ namespace PopupTotals
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     public class Plugin : BasePlugin
     {
-        public static ManualLogSource Logger;
+        internal static ManualLogSource Logger { get; private set; }
         private Harmony _harmony;
 
         public override void Load()
