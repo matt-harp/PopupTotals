@@ -1,6 +1,8 @@
 # PopupTotals
 A mod to show the total amount of an item in your inventory while collecting resources
 
+Please note that I am not actively working on this but will gladly accept pull requests :)
+
 <details>
 <summary>Examples</summary>
 <br>
@@ -17,13 +19,11 @@ A mod to show the total amount of an item in your inventory while collecting res
 - None ([report one?](https://github.com/matt-harp/PopupTotals)) 
 
 ### Support
-Join the [modding community](https://discord.gg/CWzkHvekg3) for support `@Night#3605`
-
 Post an issue on the [github repo](https://github.com/matt-harp/PopupTotals) 
 
 ### Changelog
 
-`1.0.7` Gloomrot Update
+`1.0.7` Gloomrot Update (kindly contributed by p1xel8ted)
 
 `1.0.6` Fixes for Trippy Shroom and seeds
 
