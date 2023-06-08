@@ -10,7 +10,7 @@ A mod to show the total amount of an item in your inventory while collecting res
 
 
 ### Installation
-- Install [BepInEx](https://v-rising.thunderstore.io/package/BepInEx/BepInExPack_V_Rising/)
+- Install [BepInEx](https://github.com/decaprime/VRising-Modding/releases/tag/1.668.4)
 - Extract _PopupTotals.dll_ into _(VRising folder)/BepInEx/plugins_
 
 ### Known Issues
@@ -22,6 +22,8 @@ Join the [modding community](https://discord.gg/CWzkHvekg3) for support `@Night#
 Post an issue on the [github repo](https://github.com/matt-harp/PopupTotals) 
 
 ### Changelog
+
+`1.0.7` Gloomrot Update
 
 `1.0.6` Fixes for Trippy Shroom and seeds
 

@@ -1,69 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
 using ProjectM;
-using StunLocalization;
+using Stunlock.Localization;
 
 namespace PopupTotals
 {
     [HarmonyPatch]
     public class ItemUtils
     {
-        private static Dictionary<string, PrefabGUID> _ItemNameToPrefabLookup = new();
-        public static Dictionary<string, PrefabGUID> ItemNameToPrefabLookup => _ItemNameToPrefabLookup;
+        private static readonly Dictionary<string, PrefabGUID> ItemNameToPrefabLookup = new();
+        private static GameDataSystem System { get; set; }
+        private static readonly HashSet<string> Errored = new();
 
-        private static GameDataSystem _system;
-        private static List<string> _errored = new();
-
-        [HarmonyPatch(typeof(GameDataSystem), nameof(GameDataSystem.RegisterItems))]
-        [HarmonyPostfix]
-        private static void GameDataSystem_RegisterItems_Postfix(GameDataSystem __instance)
+        private static readonly List<string> SubStringsToMatch = new()
         {
-            _system = __instance;
+            "_Ingredient_", "Item_Consumable", "Item_Building_Plants"
+        };
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(GameDataSystem), nameof(GameDataSystem.RegisterItems))]
+        private static void GameDataSystem_RegisterItems_Postfix(ref GameDataSystem __instance)
+        {
+            System = __instance;
             if (__instance.ItemHashLookupMap.Count() == 0) return;
             Plugin.Logger.LogInfo("Creating lookup tables...");
-            RebuildLUT();
+            RebuildLut();
         }
-
-        public static void RebuildLUT()
+        
+        private static void RebuildLut()
         {
-            _ItemNameToPrefabLookup.Clear();
-            _errored.Clear();
-            var managed = _system.ManagedDataRegistry;
-            foreach (var kv in _system.ItemHashLookupMap)
+            ItemNameToPrefabLookup.Clear();
+            Errored.Clear();
+            var managed = System.ManagedDataRegistry;
+            foreach (var kv in System.ItemHashLookupMap)
             {
                 try
                 {
                     var guid = kv.Key;
                     var managedData = managed.GetOrDefault<ManagedItemData>(guid);
                     if (managedData == null) continue;
-                    if (!managedData.PrefabName.Contains("_Ingredient_") && !managedData.PrefabName.Contains("Item_Consumable") && !managedData.PrefabName.Contains("Item_Building_Plants")) continue;
+                    if (!SubStringsToMatch.Any(managedData.PrefabName.Contains)) continue;
                     if (managedData.PrefabName is "Item_Ingredient_Kit_Base" or "Item_Ingredient_Gem_Base") continue;
                     var itemName = Localization.Get(managedData.Name, false);
-                    Plugin.Logger.LogDebug(itemName);
-                    
-                    _ItemNameToPrefabLookup.Add(itemName, guid);
+                    Plugin.Logger.LogDebug($"Item: {itemName}, PrefabName: {managedData.PrefabName}, PrefabGUID: {guid.ToString()}");
+
+                    ItemNameToPrefabLookup.TryAdd(itemName, guid);
                 }
                 catch (Exception e)
                 {
                     Plugin.Logger.LogError(e);
-                    // ignored
                 }
             }
         }
 
         public static PrefabGUID GetOrRebuild(string itemName)
         {
-            if (_ItemNameToPrefabLookup.ContainsKey(itemName))
-                return _ItemNameToPrefabLookup[itemName];
-            RebuildLUT();
-            if (_ItemNameToPrefabLookup.ContainsKey(itemName))
-                return _ItemNameToPrefabLookup[itemName];
-            if(!_errored.Contains(itemName))
-            {
-                Plugin.Logger.LogError($"Error rebuilding LUT no itemname found: {itemName}");
-                _errored.Add(itemName);
-            }
+            if (ItemNameToPrefabLookup.TryGetValue(itemName, out var rebuild))
+                return rebuild;
+            RebuildLut();
+            if (ItemNameToPrefabLookup.TryGetValue(itemName, out var orRebuild))
+                return orRebuild;
+            
+            if (Errored.Contains(itemName)) return PrefabGUID.Empty;
+            
+            Plugin.Logger.LogError($"Error rebuilding LUT no item name found: {itemName}");
+            Errored.Add(itemName);
+
             return PrefabGUID.Empty;
         }
     }
