@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
 using ProjectM;
 using Stunlock.Localization;
@@ -9,10 +10,14 @@ namespace PopupTotals
     [HarmonyPatch]
     public class ItemUtils
     {
-        private static Dictionary<string, PrefabGUID> ItemNameToPrefabLookup { get; } = new();
-
+        private static readonly Dictionary<string, PrefabGUID> ItemNameToPrefabLookup = new();
         private static GameDataSystem System { get; set; }
-        private static List<string> Errored { get; } = new();
+        private static readonly HashSet<string> Errored = new();
+
+        private static readonly List<string> SubStringsToMatch = new()
+        {
+            "_Ingredient_", "Item_Consumable", "Item_Building_Plants"
+        };
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(GameDataSystem), nameof(GameDataSystem.RegisterItems))]
@@ -23,7 +28,7 @@ namespace PopupTotals
             Plugin.Logger.LogInfo("Creating lookup tables...");
             RebuildLut();
         }
-
+        
         private static void RebuildLut()
         {
             ItemNameToPrefabLookup.Clear();
@@ -36,7 +41,7 @@ namespace PopupTotals
                     var guid = kv.Key;
                     var managedData = managed.GetOrDefault<ManagedItemData>(guid);
                     if (managedData == null) continue;
-                    if (!managedData.PrefabName.Contains("_Ingredient_") && !managedData.PrefabName.Contains("Item_Consumable") && !managedData.PrefabName.Contains("Item_Building_Plants")) continue;
+                    if (!SubStringsToMatch.Any(managedData.PrefabName.Contains)) continue;
                     if (managedData.PrefabName is "Item_Ingredient_Kit_Base" or "Item_Ingredient_Gem_Base") continue;
                     var itemName = Localization.Get(managedData.Name, false);
                     Plugin.Logger.LogDebug($"Item: {itemName}, PrefabName: {managedData.PrefabName}, PrefabGUID: {guid.ToString()}");
@@ -46,7 +51,6 @@ namespace PopupTotals
                 catch (Exception e)
                 {
                     Plugin.Logger.LogError(e);
-                    // ignored
                 }
             }
         }
@@ -58,11 +62,11 @@ namespace PopupTotals
             RebuildLut();
             if (ItemNameToPrefabLookup.TryGetValue(itemName, out var orRebuild))
                 return orRebuild;
-            if (!Errored.Contains(itemName))
-            {
-                Plugin.Logger.LogError($"Error rebuilding LUT no item name found: {itemName}");
-                Errored.Add(itemName);
-            }
+            
+            if (Errored.Contains(itemName)) return PrefabGUID.Empty;
+            
+            Plugin.Logger.LogError($"Error rebuilding LUT no item name found: {itemName}");
+            Errored.Add(itemName);
 
             return PrefabGUID.Empty;
         }
