@@ -14,10 +14,10 @@ namespace PopupTotals
     {
         private static readonly Dictionary<string, PrefabGUID> ItemNameToPrefabLookup = new();
         private static GameDataSystem DataSystem { get; set; }
-        private static readonly HashSet<string> Errored = [];
+        private static readonly HashSet<string> Errored = new HashSet<string>();
 
         private static readonly List<string> SubStringsToMatch =
-            ["_Ingredient_", "Item_Consumable", "Item_Building_Plants"];
+            new List<string> { "_Ingredient_", "Item_Consumable", "Item_Building_Plants" };
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(GameDataSystem), nameof(GameDataSystem.RegisterItems))]
