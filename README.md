@@ -23,6 +23,9 @@ Post an issue on the [github repo](https://github.com/matt-harp/PopupTotals)
 
 ### Changelog
 
+
+`1.2.0` Unofficial Oakveil (1.1) Update - Fixed API signatures and updated C# syntax for the new game client
+
 `1.1.0` V Rising 1.0 Update
 
 `1.0.7` Gloomrot Update (kindly contributed by p1xel8ted)
