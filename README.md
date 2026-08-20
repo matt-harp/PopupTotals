@@ -1,7 +1,7 @@
 # PopupTotals
 A mod to show the total amount of an item in your inventory while collecting resources
 
-Please note that I am not actively working on this but will gladly accept pull requests :)
+**NOTE:** This is an unofficial update for Oakveil (1.1). All original credit goes to Nightbreak and p1xel8ted. I have updated the queries and signatures to work with the latest game client.
 
 <details>
 <summary>Examples</summary>
