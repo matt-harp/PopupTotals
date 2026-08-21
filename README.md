@@ -16,14 +16,14 @@ A mod to show the total amount of an item in your inventory while collecting res
 - Extract _PopupTotals.dll_ into _(VRising folder)/BepInEx/plugins_
 
 ### Known Issues
-- None ([report one?](https://github.com/Moj-FPS/PopupTotals/issues)) 
+- None ([report one?](https://github.com/matt-harp/PopupTotals)) 
 
 ### Support
-Post an issue on the [github repo](https://github.com/Moj-FPS/PopupTotals/issues)
+Post an issue on the [github repo](https://github.com/matt-harp/PopupTotals)
 
 ### Changelog
 
-`1.2.0` Unofficial Oakveil (1.1) Update - Fixed API signatures and updated C# syntax for the new game client
+`1.2.0` Updated for Oakveil (contributed by Moj-FPS)
 
 `1.1.0` V Rising 1.0 Update
 
