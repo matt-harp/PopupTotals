@@ -12,16 +12,18 @@ Please note that I am not actively working on this but will gladly accept pull r
 
 
 ### Manual Installation
-- Install [BepInEx](https://github.com/decaprime/VRising-Modding/releases/tag/1.668.4)
+- Install [BepInExPack V Rising](https://v-rising.thunderstore.io/package/BepInEx/BepInExPack_V_Rising/)
 - Extract _PopupTotals.dll_ into _(VRising folder)/BepInEx/plugins_
 
 ### Known Issues
 - None ([report one?](https://github.com/matt-harp/PopupTotals)) 
 
 ### Support
-Post an issue on the [github repo](https://github.com/matt-harp/PopupTotals) 
+Post an issue on the [github repo](https://github.com/matt-harp/PopupTotals)
 
 ### Changelog
+
+`1.2.0` Updated for Oakveil (contributed by Moj-FPS)
 
 `1.1.0` V Rising 1.0 Update
 
