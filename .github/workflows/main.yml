@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["master"]
-    
+
 jobs:
   build:
     permissions:
@@ -33,12 +33,12 @@ jobs:
 
       - name: Build (Release)
         run: dotnet build . --configuration Release -p:Version=${{ env.VERSION }}
-        
+
       - name: GH Release
         uses: softprops/action-gh-release@v1
         if:  ${{ !env.ACT && github.event_name == 'push' }}
         with:
-          body: Automatic pre-release of ${{ env.VERSION }} for ${{ env.GITHUB_SHA }}
+          body: Automatic pre-release of ${{ env.VERSION }}
           name: v${{ env.VERSION }}
           files: ./bin/Release/net6.0/PopupTotals.dll
           fail_on_unmatched_files: true
